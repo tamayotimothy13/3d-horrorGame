@@ -1,0 +1,1 @@
+Collectables, interactables, etc idk
