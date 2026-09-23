@@ -13,7 +13,7 @@ sky_material = SubResource("ProceduralSkyMaterial_iuonh")
 [sub_resource type="Environment" id="Environment_l3cfh"]
 background_mode = 2
 sky = SubResource("Sky_k2fmo")
-glow_enabled = true
+fog_enabled = true
 
 [node name="Map" type="Node3D" unique_id=875780235]
 
