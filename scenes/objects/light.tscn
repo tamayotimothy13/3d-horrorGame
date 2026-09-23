@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://rwongc7enlc4"]
+
+[ext_resource type="Script" uid="uid://bsfyp277fed1o" path="res://scenes/objects/light.gd" id="1_yvhfm"]
+
+[node name="light" type="OmniLight3D" unique_id=751037052]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+light_color = Color(0.9999998, 0.090942286, 0.05946441, 1)
+light_energy = 5.0
+script = ExtResource("1_yvhfm")

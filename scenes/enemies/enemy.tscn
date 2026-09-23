@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dn5f43j6cp8p5"]
 
 [ext_resource type="Script" uid="uid://b3el53rcmgcni" path="res://scripts/enemy/enemy.gd" id="1_6xk8f"]
+[ext_resource type="PackedScene" uid="uid://rwongc7enlc4" path="res://scenes/objects/light.tscn" id="2_8e3ao"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27gba"]
 
@@ -20,3 +21,5 @@ surface_material_override/0 = SubResource("StandardMaterial3D_h4pri")
 shape = SubResource("CapsuleShape3D_27gba")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1605999090]
+
+[node name="light" parent="." unique_id=751037052 instance=ExtResource("2_8e3ao")]
