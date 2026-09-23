@@ -43,9 +43,6 @@ albedo_color = Color(0.24526232, 0.6777837, 0, 0.59000003)
 [node name="TrainingGroundMap" type="Node3D" unique_id=1809367157]
 script = ExtResource("1_3qjxq")
 
-[node name="light" parent="." unique_id=1675719144 instance=ExtResource("2_ad4cf")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -41.262352, 4.264902, 85.6069)
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=907733695]
 navigation_mesh = SubResource("NavigationMesh_27gba")
 
@@ -298,5 +295,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_b5ii5")
 
 [node name="SpawnPoint" parent="." unique_id=410795249 instance=ExtResource("3_3qjxq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 109.65672, 28.334854, -48.442017)
+
+[node name="light" parent="." unique_id=1675719144 instance=ExtResource("2_ad4cf")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -41.262352, 4.264902, 85.6069)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=281226707]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 60.01523, 0)
+light_color = Color(0.4506483, 0.4506483, 0.45064825, 1)
+sky_mode = 1
 
 [connection signal="body_entered" from="TriggerZone" to="." method="_on_trigger_zone_body_entered"]
