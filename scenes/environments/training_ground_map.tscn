@@ -304,4 +304,10 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6
 light_color = Color(0.4506483, 0.4506483, 0.45064825, 1)
 sky_mode = 1
 
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=532454255]
+transform = Transform3D(-0.10146819, -0.6196292, 0.7783084, 0.12577763, 0.7680781, 0.6278823, -0.9868557, 0.16160388, -4.81617e-09, 344.29797, 274.37662, 0.20237732)
+light_energy = 1000.0
+light_indirect_energy = 1.185
+spot_range = 4096.0
+
 [connection signal="body_entered" from="TriggerZone" to="." method="_on_trigger_zone_body_entered"]
