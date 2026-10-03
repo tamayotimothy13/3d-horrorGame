@@ -12,7 +12,7 @@ func _ready():
 	target = get_tree().get_first_node_in_group("player")
 	if target:
 		print("Hinahabol ko si: ", target.name, " sa posisyon na: ", target.global_position)
-
+	
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta

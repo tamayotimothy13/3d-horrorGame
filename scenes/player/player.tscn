@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dky2rjs4ef1ri"]
 
+[ext_resource type="AudioStream" uid="uid://ddqe2m7ybgy3e" path="res://assets/audio/flashlight_on_sound_1.mp3" id="2_lvxji"]
+[ext_resource type="AudioStream" uid="uid://dvmg6dukfo62b" path="res://assets/audio/footsteps_concrete_1.wav" id="3_gmlin"]
 [ext_resource type="PackedScene" uid="uid://vva8r34hd3yy" path="res://scenes/objects/flashlight_1.tscn" id="3_lvxji"]
 [ext_resource type="Shader" uid="uid://cu7cq5jwpv5sq" path="res://assets/shaders/vignette.gdshader" id="4_vignette"]
 
@@ -29,6 +31,13 @@ const MOVE_BOB_AMPLITUDE = 0.50
 var bob_timer = 0.0
 var camera_base_y = 0.0
 
+# Footsteps
+var footstep_timer = 0.0
+
+const WALK_FOOTSTEP_INTERVAL = 0.45
+const SPRINT_FOOTSTEP_INTERVAL = 0.28
+const CROUCH_FOOTSTEP_INTERVAL = 0.65
+
 # Stamina bar fade
 const STAMINA_BAR_FADE_IN_SPEED = 6.0 # alpha per second, quick to appear
 const STAMINA_BAR_FADE_OUT_SPEED = 1.5 # alpha per second, lingers a bit then fades
@@ -45,6 +54,7 @@ const VIGNETTE_FADE_SPEED = 1.5 # intensity units per second
 
 @onready var camera = $Camera3D
 @onready var flashlight_1: SpotLight3D = $Camera3D/flashlight_1
+@onready var footstep_audio: AudioStreamPlayer3D = $FootstepAudio
 @onready var stamina_bar: ProgressBar = $HUD/StaminaBar
 @onready var vignette: ColorRect = $HUD/Vignette
 @onready var audio_tiers: Array[AudioStreamPlayer] = [
@@ -53,6 +63,8 @@ const VIGNETTE_FADE_SPEED = 1.5 # intensity units per second
 	$EnemyProximityAudio/AudioTier15,
 	$EnemyProximityAudio/AudioTier5,
 ]
+
+@onready var chase_audio: AudioStreamPlayer = $EnemyProximityAudio/ChaseAudio
 
 var vignette_material: ShaderMaterial
 var current_vignette_intensity = VIGNETTE_BASE_INTENSITY
@@ -125,6 +137,7 @@ func _physics_process(delta): # all movment code inside this
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	_update_camera_bob(delta)
+	_update_footsteps(delta)
 	_update_enemy_proximity(delta)
 
 	# Handles the interaction mechanic
@@ -150,6 +163,27 @@ func _update_camera_bob(delta):
 		# Subtle idle \"breathing\" bob while standing still
 		bob_timer += delta * IDLE_BOB_FREQUENCY
 		camera.position.y = camera_base_y + sin(bob_timer) * IDLE_BOB_AMPLITUDE
+		
+func _update_footsteps(delta):
+	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	var is_moving = horizontal_speed > 0.1 and is_on_floor()
+
+	if not is_moving:
+		footstep_timer = 0.0
+		return
+
+	var footstep_interval = WALK_FOOTSTEP_INTERVAL
+
+	if Input.is_action_pressed(\"sprint\") and horizontal_speed > 20.0:
+		footstep_interval = SPRINT_FOOTSTEP_INTERVAL
+	elif Input.is_action_pressed(\"crouch\"):
+		footstep_interval = CROUCH_FOOTSTEP_INTERVAL
+
+	footstep_timer -= delta
+
+	if footstep_timer <= 0.0:
+		footstep_audio.play()
+		footstep_timer = footstep_interval
 
 func _update_enemy_proximity(delta):
 	# Find the nearest enemy (supports multiple enemies in the \"enemy\" group)
@@ -227,9 +261,15 @@ debug_color = Color(0.8727141, 0.26935217, 0.5652857, 0.41960785)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56890416, 0)
 
 [node name="flashlight_1" parent="Camera3D" unique_id=2019525122 instance=ExtResource("3_lvxji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06490773, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0010641813, 0)
 distance_fade_enabled = true
-spot_angle = 45.0
+spot_range = 100.0
+spot_angle = 40.0
+
+[node name="FlashlightSound" type="AudioStreamPlayer" parent="Camera3D/flashlight_1" unique_id=1692689821]
+stream = ExtResource("2_lvxji")
+
+[node name="FlickerSound" type="AudioStreamPlayer" parent="Camera3D/flashlight_1" unique_id=138614187]
 
 [node name="passive_light" type="SpotLight3D" parent="Camera3D" unique_id=1650460402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.2816916)
@@ -253,6 +293,8 @@ volume_db = -80.0
 [node name="AudioTier5" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=972538756]
 volume_db = -80.0
 
+[node name="ChaseAudio" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=618585503]
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1712935308]
 
 [node name="Vignette" type="ColorRect" parent="HUD" unique_id=988414713]
@@ -273,3 +315,6 @@ offset_bottom = 578.0
 max_value = 3.0
 value = 3.0
 show_percentage = false
+
+[node name="FootstepAudio" type="AudioStreamPlayer3D" parent="." unique_id=1416747824]
+stream = ExtResource("3_gmlin")
