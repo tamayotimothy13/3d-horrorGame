@@ -10,7 +10,7 @@ albedo_color = Color(0.76674443, 0.0021251892, 2.8878452e-07, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27gba"]
 
-[node name="Enemy" type="CharacterBody3D" unique_id=819045432]
+[node name="Enemy" type="CharacterBody3D" unique_id=819045432 groups=["enemy"]]
 script = ExtResource("1_6xk8f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1641406179]

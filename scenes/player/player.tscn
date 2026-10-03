@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dky2rjs4ef1ri"]
 
 [ext_resource type="PackedScene" uid="uid://vva8r34hd3yy" path="res://scenes/objects/flashlight_1.tscn" id="3_lvxji"]
+[ext_resource type="Shader" uid="uid://cu7cq5jwpv5sq" path="res://assets/shaders/vignette.gdshader" id="4_vignette"]
 
 [sub_resource type="GDScript" id="GDScript_gmlin"]
 script/source = "extends CharacterBody3D
@@ -12,13 +13,62 @@ const CROUCH_SPEED = 9
 var normal_fov = 75.0
 var danger_fov = 100.0
 
+# Stamina system
+const MAX_STAMINA = 3.0 # seconds of sprint available
+const STAMINA_REGEN_TIME = 5.0 # seconds to fully regen from empty, also the lockout duration
+var stamina = MAX_STAMINA
+var stamina_locked = false # true while in the post-exhaustion cooldown
+
 var gravity = ProjectSettings.get_setting(\"physics/3d/default_gravity\")
+
+# Camera bob
+const IDLE_BOB_FREQUENCY = 10.0
+const IDLE_BOB_AMPLITUDE = 0.15
+const MOVE_BOB_FREQUENCY = 10.0
+const MOVE_BOB_AMPLITUDE = 0.50
+var bob_timer = 0.0
+var camera_base_y = 0.0
+
+# Stamina bar fade
+const STAMINA_BAR_FADE_IN_SPEED = 6.0 # alpha per second, quick to appear
+const STAMINA_BAR_FADE_OUT_SPEED = 1.5 # alpha per second, lingers a bit then fades
+
+# Enemy proximity audio + vignette
+const ENEMY_TIER_FAR = 50.0
+const ENEMY_TIER_MID = 15.0
+const ENEMY_TIER_CLOSE = 5.0
+const AUDIO_FADE_SPEED_DB = 40.0 # dB per second crossfade speed
+const AUDIO_SILENT_DB = -80.0
+const VIGNETTE_BASE_INTENSITY = 0.25 # always-present atmospheric vignette
+const VIGNETTE_MAX_INTENSITY = 0.75 # intensity when enemy is at/closer than ENEMY_TIER_CLOSE
+const VIGNETTE_FADE_SPEED = 1.5 # intensity units per second
 
 @onready var camera = $Camera3D
 @onready var flashlight_1: SpotLight3D = $Camera3D/flashlight_1
+@onready var stamina_bar: ProgressBar = $HUD/StaminaBar
+@onready var vignette: ColorRect = $HUD/Vignette
+@onready var audio_tiers: Array[AudioStreamPlayer] = [
+	$EnemyProximityAudio/AudioFar,
+	$EnemyProximityAudio/AudioTier50,
+	$EnemyProximityAudio/AudioTier15,
+	$EnemyProximityAudio/AudioTier5,
+]
+
+var vignette_material: ShaderMaterial
+var current_vignette_intensity = VIGNETTE_BASE_INTENSITY
+var last_logged_tier = -1 # used to only print when the enemy proximity tier changes
+const TIER_NAMES = [\"FAR (>50m)\", \"TIER 50m\", \"TIER 15m\", \"TIER 5m\"]
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	camera_base_y = camera.position.y
+	stamina_bar.max_value = MAX_STAMINA
+	stamina_bar.value = stamina
+	stamina_bar.modulate.a = 0.0 # hidden until the player actually sprints
+	vignette_material = vignette.material as ShaderMaterial
+	vignette_material.set_shader_parameter(\"intensity\", VIGNETTE_BASE_INTENSITY)
+	for player in audio_tiers:
+		player.volume_db = AUDIO_SILENT_DB
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -41,29 +91,108 @@ func _physics_process(delta): # all movment code inside this
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	# Handles sprint and crouch mechanic/speed
-	if Input.is_action_pressed(\"sprint\"):
+	var regen_rate = MAX_STAMINA / STAMINA_REGEN_TIME
+	# Bug fix: only consider the player \"sprinting\" (and draining stamina) if
+	# they are actually holding a movement direction, not just holding shift in place.
+	var wants_to_sprint = Input.is_action_pressed(\"sprint\") and not stamina_locked and stamina > 0.0 and direction != Vector3.ZERO
+
+	if wants_to_sprint:
 		SPEED = SPRINT_SPEED
-	elif Input.is_action_pressed(\"crouch\"):
-		SPEED = CROUCH_SPEED
+		stamina = max(stamina - delta, 0.0)
+		if stamina <= 0.0:
+			stamina_locked = true
 	else:
-		SPEED = 18
-		
+		if Input.is_action_pressed(\"crouch\"):
+			SPEED = CROUCH_SPEED
+		else:
+			SPEED = 18
+		stamina = min(stamina + regen_rate * delta, MAX_STAMINA)
+		if stamina_locked and stamina >= MAX_STAMINA:
+			stamina_locked = false
+
+	stamina_bar.value = stamina
+
+	# Stamina bar fades in while actively draining, and fades out while idle/recharging
+	var stamina_bar_target_alpha = 1.0 if wants_to_sprint else 0.0
+	var stamina_bar_fade_speed = STAMINA_BAR_FADE_IN_SPEED if stamina_bar_target_alpha > stamina_bar.modulate.a else STAMINA_BAR_FADE_OUT_SPEED
+	stamina_bar.modulate.a = move_toward(stamina_bar.modulate.a, stamina_bar_target_alpha, stamina_bar_fade_speed * delta)
+
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-		
+
+	_update_camera_bob(delta)
+	_update_enemy_proximity(delta)
+
 	# Handles the interaction mechanic
 	if Input.is_action_just_pressed(\"interact\"):
-		if $Camera3D/RayCast3D.is_colliding():
-			var item = $Camera3D/RayCast3D.get_collider()
+		if $Camera3D/Interaction_Raytracing.is_colliding():
+			var item = $Camera3D/Interaction_Raytracing.get_collider()
 			
 			if item.is_in_group(\"interactable\"):
 				item.interact()
 
 	move_and_slide()
+
+func _update_camera_bob(delta):
+	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	var is_moving = horizontal_speed > 0.1 and is_on_floor()
+
+	if is_moving:
+		# Bob faster/stronger the faster the player is going (walk vs sprint vs crouch)
+		var speed_ratio = clamp(horizontal_speed / SPRINT_SPEED, 0.0, 1.0)
+		bob_timer += delta * MOVE_BOB_FREQUENCY * (1.0 + speed_ratio)
+		camera.position.y = camera_base_y + sin(bob_timer) * MOVE_BOB_AMPLITUDE * (0.5 + speed_ratio)
+	else:
+		# Subtle idle \"breathing\" bob while standing still
+		bob_timer += delta * IDLE_BOB_FREQUENCY
+		camera.position.y = camera_base_y + sin(bob_timer) * IDLE_BOB_AMPLITUDE
+
+func _update_enemy_proximity(delta):
+	# Find the nearest enemy (supports multiple enemies in the \"enemy\" group)
+	var nearest_distance = INF
+	for enemy in get_tree().get_nodes_in_group(\"enemy\"):
+		if enemy is Node3D:
+			var dist = global_position.distance_to(enemy.global_position)
+			if dist < nearest_distance:
+				nearest_distance = dist
+
+	# Pick the audio tier: 0 = far/no enemy, 1 = within 50m, 2 = within 15m, 3 = within 5m
+	var tier = 0
+	if nearest_distance <= ENEMY_TIER_CLOSE:
+		tier = 3
+	elif nearest_distance <= ENEMY_TIER_MID:
+		tier = 2
+	elif nearest_distance <= ENEMY_TIER_FAR:
+		tier = 1
+
+	# Log only when the tier actually changes, to avoid spamming the console every frame
+	if tier != last_logged_tier:
+		if nearest_distance < INF:
+			print(\"Enemy proximity: \", TIER_NAMES[tier], \" - distance: \", snapped(nearest_distance, 0.1), \"m\")
+		else:
+			print(\"Enemy proximity: \", TIER_NAMES[tier], \" - no enemy in range\")
+		last_logged_tier = tier
+
+	for i in audio_tiers.size():
+		var player = audio_tiers[i]
+		var target_db = 0.0 if i == tier else AUDIO_SILENT_DB
+		player.volume_db = move_toward(player.volume_db, target_db, AUDIO_FADE_SPEED_DB * delta)
+		if player.stream and player.volume_db > AUDIO_SILENT_DB + 1.0 and not player.playing:
+			player.play()
+		elif player.volume_db <= AUDIO_SILENT_DB + 0.1 and player.playing:
+			player.stop()
+
+	# Vignette gets stronger the closer the enemy is, on top of the base atmospheric vignette
+	var proximity_ratio = 0.0
+	if nearest_distance < INF:
+		proximity_ratio = clamp(1.0 - (nearest_distance / ENEMY_TIER_FAR), 0.0, 1.0)
+	var target_intensity = lerp(VIGNETTE_BASE_INTENSITY, VIGNETTE_MAX_INTENSITY, proximity_ratio)
+	current_vignette_intensity = move_toward(current_vignette_intensity, target_intensity, VIGNETTE_FADE_SPEED * delta)
+	vignette_material.set_shader_parameter(\"intensity\", current_vignette_intensity)
 
 func _on_trigger_zone_body_entered(body: Node3D) -> void:
 	if body.is_in_group(\"player\"):
@@ -80,6 +209,13 @@ func monster_seen():
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27gba"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("4_vignette")
+shader_parameter/intensity = 0.25
+shader_parameter/radius = 0.75
+shader_parameter/softness = 0.55
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
 [node name="Player" type="CharacterBody3D" unique_id=1925318435 groups=["player"]]
 script = SubResource("GDScript_gmlin")
 
@@ -95,5 +231,45 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06490773, 0)
 distance_fade_enabled = true
 spot_angle = 45.0
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1227334963]
+[node name="passive_light" type="SpotLight3D" parent="Camera3D" unique_id=1650460402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.2816916)
+light_energy = 0.4
+spot_range = 8.804026
+
+[node name="Interaction_Raytracing" type="RayCast3D" parent="Camera3D" unique_id=1227334963]
 target_position = Vector3(0, 0, -3)
+
+[node name="EnemyProximityAudio" type="Node" parent="." unique_id=1625274148]
+
+[node name="AudioFar" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=1074640284]
+volume_db = -80.0
+
+[node name="AudioTier50" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=699286947]
+volume_db = -80.0
+
+[node name="AudioTier15" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=1040824567]
+volume_db = -80.0
+
+[node name="AudioTier5" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=972538756]
+volume_db = -80.0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1712935308]
+
+[node name="Vignette" type="ColorRect" parent="HUD" unique_id=988414713]
+material = SubResource("ShaderMaterial_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="StaminaBar" type="ProgressBar" parent="HUD" unique_id=1182729120]
+offset_left = 483.0
+offset_top = 554.0
+offset_right = 683.0
+offset_bottom = 578.0
+max_value = 3.0
+value = 3.0
+show_percentage = false
