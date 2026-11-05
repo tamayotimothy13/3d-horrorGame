@@ -16,12 +16,12 @@ var stamina_locked = false # true while in the post-exhaustion cooldown
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Camera bob
-const IDLE_BOB_FREQUENCY = 10.0
-const IDLE_BOB_AMPLITUDE = 0.15
-const MOVE_BOB_FREQUENCY = 10.0
-const MOVE_BOB_AMPLITUDE = 0.50
-var bob_timer = 0.0
-var camera_base_y = 0.0
+#const IDLE_BOB_FREQUENCY = 5.0
+#const IDLE_BOB_AMPLITUDE = 0.15
+#const MOVE_BOB_FREQUENCY = 10.0
+#const MOVE_BOB_AMPLITUDE = 0.50
+#var bob_timer = 0.0
+#var camera_base_y = 0.0
 
 # Footsteps
 var footstep_timer = 0.0
@@ -142,19 +142,19 @@ func _physics_process(delta): # all movment code inside this
 
 	move_and_slide()
 
-func _update_camera_bob(delta):
-	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
-	var is_moving = horizontal_speed > 0.1 and is_on_floor()
+#func _update_camera_bob(delta):
+	#var horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	#var is_moving = horizontal_speed > 0.1 and is_on_floor()
 
-	if is_moving:
+	#if is_moving:
 		# Bob faster/stronger the faster the player is going (walk vs sprint vs crouch)
-		var speed_ratio = clamp(horizontal_speed / SPRINT_SPEED, 0.0, 1.0)
-		bob_timer += delta * MOVE_BOB_FREQUENCY * (1.0 + speed_ratio)
-		camera.position.y = camera_base_y + sin(bob_timer) * MOVE_BOB_AMPLITUDE * (0.5 + speed_ratio)
-	else:
+		#var speed_ratio = clamp(horizontal_speed / SPRINT_SPEED, 0.0, 1.0)
+		#bob_timer += delta * MOVE_BOB_FREQUENCY * (1.0 + speed_ratio)
+		#camera.position.y = camera_base_y + sin(bob_timer) * MOVE_BOB_AMPLITUDE * (0.5 + speed_ratio)
+	#else:
 		# Subtle idle "breathing" bob while standing still
-		bob_timer += delta * IDLE_BOB_FREQUENCY
-		camera.position.y = camera_base_y + sin(bob_timer) * IDLE_BOB_AMPLITUDE
+		#bob_timer += delta * IDLE_BOB_FREQUENCY
+		#camera.position.y = camera_base_y + sin(bob_timer) * IDLE_BOB_AMPLITUDE
 		
 func _update_footsteps(delta):
 	var horizontal_speed = Vector2(velocity.x, velocity.z).length()

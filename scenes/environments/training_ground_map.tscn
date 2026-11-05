@@ -290,7 +290,7 @@ use_collision = true
 size = Vector3(22.88916, 18.311646, 46.973484)
 
 [node name="Player" parent="." unique_id=1925318435 instance=ExtResource("1_y2gg0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5039902, 25.646255, -89.78913)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5039902, 25.646255, 73.229576)
 
 [node name="TriggerZone" type="Area3D" parent="." unique_id=932194415]
 
@@ -304,7 +304,7 @@ mesh = SubResource("BoxMesh_27gba")
 surface_material_override/0 = SubResource("StandardMaterial3D_b5ii5")
 
 [node name="SpawnPoint" parent="." unique_id=410795249 instance=ExtResource("3_3qjxq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 109.65672, 28.334854, -48.442017)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.572372, 28.334854, 3.371151)
 
 [node name="light" parent="." unique_id=1675719144 instance=ExtResource("2_ad4cf")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -41.262352, 4.264902, 85.6069)
