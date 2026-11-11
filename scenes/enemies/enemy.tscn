@@ -11,7 +11,7 @@ albedo_color = Color(0.76674443, 0.0021251892, 2.8878452e-07, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27gba"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_27gba"]
-size = Vector3(28.992859, 11.986639, 73.09956)
+size = Vector3(18.502731, 6.117831, 9.984125)
 
 [node name="Enemy" type="CharacterBody3D" unique_id=819045432 groups=["enemy"]]
 script = ExtResource("1_6xk8f")
@@ -24,6 +24,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_h4pri")
 shape = SubResource("CapsuleShape3D_27gba")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1605999090]
+avoidance_enabled = true
 
 [node name="light" parent="." unique_id=751037052 instance=ExtResource("2_8e3ao")]
 
@@ -32,7 +33,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VisionCone" unique_id=932212079]
-transform = Transform3D(0.9998797, 0.0155086145, 0, -0.0155086145, 0.9998797, 0, 0, 0, 1, 6.6003947, 4.6960855, -5.284544)
+transform = Transform3D(0.9998797, 0.0155086145, 0, -0.0155086145, 0.9998797, 0, 0, 0, 1, 1.310453, 1.8433781, 0.86742496)
 shape = SubResource("BoxShape3D_27gba")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1889542544]
