@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
-const SPRINT_SPEED = 36
-var SPEED = 18
+const SPRINT_SPEED = 11
+var SPEED = 7
 const JUMP_VELOCITY = 25
 const CROUCH_SPEED = 9
 var normal_fov = 75.0
@@ -109,7 +109,7 @@ func _physics_process(delta): # all movment code inside this
 		if Input.is_action_pressed("crouch"):
 			SPEED = CROUCH_SPEED
 		else:
-			SPEED = 18
+			SPEED = 7
 		stamina = min(stamina + regen_rate * delta, MAX_STAMINA)
 		if stamina_locked and stamina >= MAX_STAMINA:
 			stamina_locked = false
@@ -128,7 +128,7 @@ func _physics_process(delta): # all movment code inside this
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
-	_update_camera_bob(delta)
+	#_update_camera_bob(delta)
 	_update_footsteps(delta)
 	_update_enemy_proximity(delta)
 
