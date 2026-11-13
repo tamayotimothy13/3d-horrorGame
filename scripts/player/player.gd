@@ -65,7 +65,7 @@ const TIER_NAMES = ["FAR (>50m)", "TIER 50m", "TIER 15m", "TIER 5m"]
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	camera_base_y = camera.position.y
+	# camera_base_y = camera.position.y
 	stamina_bar.max_value = MAX_STAMINA
 	stamina_bar.value = stamina
 	stamina_bar.modulate.a = 0.0 # hidden until the player actually sprints
@@ -87,8 +87,8 @@ func _physics_process(delta): # all movment code inside this
 		velocity.y -= gravity * delta
 	
 	# handle jump
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY 
+	#if Input.is_action_just_pressed("jump") and is_on_floor():
+		#velocity.y = JUMP_VELOCITY 
 		
 	# Make sure you mapped these actions in Project Settings -> Input Map
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
