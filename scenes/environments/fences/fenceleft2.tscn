@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://x2wkvskroxnj"]
+
+[ext_resource type="PackedScene" uid="uid://bq36bu1rf2hvc" path="res://assets/models/fences/fence2.glb" id="1_65wdc"]
+[ext_resource type="PackedScene" uid="uid://cq7flxk4m47vh" path="res://assets/models/fences/fence3.glb" id="2_mw7eq"]
+[ext_resource type="PackedScene" uid="uid://dnr5iv0jdub8d" path="res://assets/models/fences/fence1.glb" id="3_3k44q"]
+
+[node name="Fenceleft2" type="Node3D" unique_id=1491275178]
+
+[node name="fence2" parent="." unique_id=1900370472 instance=ExtResource("1_65wdc")]
+
+[node name="fence3" parent="." unique_id=1394377428 instance=ExtResource("2_mw7eq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.9)
+
+[node name="fence4" parent="." unique_id=1776897759 instance=ExtResource("1_65wdc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.8)
+
+[node name="fence5" parent="." unique_id=1893003383 instance=ExtResource("2_mw7eq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14.700001)
+
+[node name="fence1" parent="." unique_id=14748577 instance=ExtResource("3_3k44q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.6)
+
+[node name="fence6" parent="." unique_id=130797404 instance=ExtResource("3_3k44q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.5)
+
+[node name="fence7" parent="." unique_id=101085512 instance=ExtResource("1_65wdc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.400002)
+
+[node name="fence8" parent="." unique_id=743153955 instance=ExtResource("2_mw7eq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -34.3)
+
+[node name="fence9" parent="." unique_id=2027272656 instance=ExtResource("3_3k44q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -39.2)
+
+[node name="fence10" parent="." unique_id=964763869 instance=ExtResource("1_65wdc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.100002)
+
+[node name="fence11" parent="." unique_id=1306710881 instance=ExtResource("2_mw7eq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -49)
