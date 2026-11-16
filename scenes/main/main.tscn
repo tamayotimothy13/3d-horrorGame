@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bo7kjctnl47ni" path="res://assets/models/fences/fencegatel.glb" id="9_ouso4"]
 [ext_resource type="PackedScene" uid="uid://dgv323v3pbv6j" path="res://assets/models/fences/fencegater.glb" id="10_a8run"]
 [ext_resource type="PackedScene" uid="uid://c8jcxsrgopl1w" path="res://assets/models/shed/shed.glb" id="11_ouso4"]
+[ext_resource type="PackedScene" uid="uid://cdrn66ncml3xq" path="res://assets/models/feedingstation/feedingstation.glb" id="12_blune"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iuonh"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -71,3 +72,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.95, 0, 0)
 
 [node name="shed" parent="." unique_id=485510556 instance=ExtResource("11_ouso4")]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 40, 0, -33.265)
+
+[node name="feedingstation" parent="." unique_id=171807709 instance=ExtResource("12_blune")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8619843, -1.9073486e-06, 50.996685)
