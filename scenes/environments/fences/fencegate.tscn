@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bfa3w1fn85yq7"]
+
+[ext_resource type="PackedScene" uid="uid://bo7kjctnl47ni" path="res://assets/models/fences/fencegatel.glb" id="1_3mu6m"]
+[ext_resource type="PackedScene" uid="uid://dgv323v3pbv6j" path="res://assets/models/fences/fencegater.glb" id="2_d7mav"]
+[ext_resource type="PackedScene" uid="uid://cs808stko7uwo" path="res://assets/models/fences/fencepost.glb" id="3_33jk3"]
+
+[node name="Fencegate" type="Node3D" unique_id=1077148273]
+
+[node name="fencegatel" parent="." unique_id=605641426 instance=ExtResource("1_3mu6m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 4.925)
+
+[node name="fencegater" parent="." unique_id=631348765 instance=ExtResource("2_d7mav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, -0.025)
+
+[node name="fencepost" parent="." unique_id=375628347 instance=ExtResource("3_33jk3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.005826056, 5.040343)
+
+[node name="fencepost2" parent="." unique_id=62941820 instance=ExtResource("3_33jk3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.04)

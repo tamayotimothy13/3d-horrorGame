@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://tkdfiqrwsc8j"]
+
+[ext_resource type="PackedScene" uid="uid://bq36bu1rf2hvc" path="res://assets/models/fences/fence2.glb" id="1_agf72"]
+[ext_resource type="PackedScene" uid="uid://cq7flxk4m47vh" path="res://assets/models/fences/fence3.glb" id="2_sbevt"]
+[ext_resource type="PackedScene" uid="uid://dnr5iv0jdub8d" path="res://assets/models/fences/fence1.glb" id="3_b7l2e"]
+[ext_resource type="PackedScene" uid="uid://dvpalmxlhmuvk" path="res://assets/models/fences/fencepostsmall.glb" id="4_sbevt"]
+
+[node name="Fenceleft2" type="Node3D" unique_id=1491275178]
+
+[node name="fence2" parent="." unique_id=1900370472 instance=ExtResource("1_agf72")]
+
+[node name="fence3" parent="." unique_id=1394377428 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.9)
+
+[node name="fence4" parent="." unique_id=1776897759 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.8)
+
+[node name="fence5" parent="." unique_id=1893003383 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14.700001)
+
+[node name="fence1" parent="." unique_id=14748577 instance=ExtResource("3_b7l2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.6)
+
+[node name="fence6" parent="." unique_id=130797404 instance=ExtResource("3_b7l2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.5)
+
+[node name="fence7" parent="." unique_id=101085512 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.400002)
+
+[node name="fence8" parent="." unique_id=743153955 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -34.3)
+
+[node name="fence9" parent="." unique_id=2027272656 instance=ExtResource("3_b7l2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -39.2)
+
+[node name="fence10" parent="." unique_id=964763869 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.100002)
+
+[node name="fence11" parent="." unique_id=1306710881 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -49)
+
+[node name="fence12" parent="." unique_id=80297873 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -53.9)
+
+[node name="fence13" parent="." unique_id=2029488415 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -58.800003)
+
+[node name="fence14" parent="." unique_id=1336891132 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -63.7)
+
+[node name="fence15" parent="." unique_id=1790527886 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -68.600006)
+
+[node name="fence16" parent="." unique_id=445683316 instance=ExtResource("3_b7l2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -73.5)
+
+[node name="fence17" parent="." unique_id=1004574195 instance=ExtResource("3_b7l2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -78.4)
+
+[node name="fence18" parent="." unique_id=388618890 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -83.3)
+
+[node name="fence19" parent="." unique_id=2111861108 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -88.2)
+
+[node name="fence20" parent="." unique_id=1558082982 instance=ExtResource("3_b7l2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -93.100006)
+
+[node name="fence21" parent="." unique_id=2060967191 instance=ExtResource("1_agf72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -98)
+
+[node name="fence22" parent="." unique_id=2009688139 instance=ExtResource("2_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -102.9)
+
+[node name="fencepostsmall" parent="." unique_id=1774439171 instance=ExtResource("4_sbevt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -107.8)

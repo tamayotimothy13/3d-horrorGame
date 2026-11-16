@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dnr5iv0jdub8d" path="res://assets/models/fences/fence1.glb" id="3_3k44q"]
 
 [node name="Fenceleft2" type="Node3D" unique_id=1491275178]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="fence2" parent="." unique_id=1900370472 instance=ExtResource("1_65wdc")]
 
