@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://baf4hvafud1e5" path="res://scenes/environments/fences/fencebarnback.tscn" id="12_7smn1"]
 [ext_resource type="PackedScene" uid="uid://cdrn66ncml3xq" path="res://assets/models/feedingstation/feedingstation.glb" id="12_blune"]
 [ext_resource type="PackedScene" uid="uid://bfa3w1fn85yq7" path="res://scenes/environments/fences/fencegate.tscn" id="12_th5th"]
+[ext_resource type="PackedScene" uid="uid://gpaqas6cwe6s" path="res://assets/models/corncrib/corncrib.glb" id="13_7smn1"]
 [ext_resource type="PackedScene" uid="uid://tkdfiqrwsc8j" path="res://scenes/environments/fences/fencebarnleft.tscn" id="13_th5th"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iuonh"]
@@ -85,3 +86,6 @@ transform = Transform3D(0.99982274, 0, -0.018826772, 0, 1, 0, 0.018826772, 0, 0.
 
 [node name="feedingstation" parent="Models/feedingstation" unique_id=171807709 instance=ExtResource("12_blune")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.862, 0, 37)
+
+[node name="corncrib" parent="." unique_id=1945595231 instance=ExtResource("13_7smn1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.426, 0, -32.866)
