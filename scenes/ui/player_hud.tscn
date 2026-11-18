@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://db42yu3urlxyw"]
+
+[ext_resource type="Script" uid="uid://dbiy0h7nla2pb" path="res://scripts/ui/player_hud.gd" id="1_hud"]
+[ext_resource type="Shader" uid="uid://cu7cq5jwpv5sq" path="res://assets/shaders/vignette.gdshader" id="2_vignette"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("2_vignette")
+shader_parameter/intensity = 0.25
+shader_parameter/radius = 0.75
+shader_parameter/softness = 0.55
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crosshair_dot"]
+bg_color = Color(1, 1, 1, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="PlayerHUD" type="CanvasLayer" unique_id=1822883035]
+script = ExtResource("1_hud")
+
+[node name="Vignette" type="ColorRect" parent="." unique_id=1335039535]
+material = SubResource("ShaderMaterial_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="StaminaBar" type="ProgressBar" parent="." unique_id=312530022]
+offset_left = 483.0
+offset_top = 554.0
+offset_right = 683.0
+offset_bottom = 578.0
+max_value = 3.0
+value = 3.0
+show_percentage = false
+
+[node name="CrosshairDot" type="Panel" parent="." unique_id=290038176]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_crosshair_dot")
+
+[node name="LookTargetLabel" type="Label" parent="." unique_id=396905850]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 22.0
+offset_right = 120.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="NoteCounterLabel" type="Label" parent="." unique_id=136527847]
+visible = false
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 220.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20

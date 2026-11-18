@@ -1,5 +1,10 @@
 extends CharacterBody3D
 
+signal stamina_changed(value: float, max_value: float, is_sprinting: bool)
+signal vignette_intensity_changed(intensity: float)
+signal look_target_changed(target_name: String)
+signal countable_interactable_completed(count: int)
+
 const SPRINT_SPEED = 11
 var SPEED = 7
 const JUMP_VELOCITY = 25
@@ -12,6 +17,7 @@ const MAX_STAMINA = 3.0 # seconds of sprint available
 const STAMINA_REGEN_TIME = 5.0 # seconds to fully regen from empty, also the lockout duration
 var stamina = MAX_STAMINA
 var stamina_locked = false # true while in the post-exhaustion cooldown
+var is_sprinting = false
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -30,10 +36,6 @@ const WALK_FOOTSTEP_INTERVAL = 0.45
 const SPRINT_FOOTSTEP_INTERVAL = 0.28
 const CROUCH_FOOTSTEP_INTERVAL = 0.65
 
-# Stamina bar fade
-const STAMINA_BAR_FADE_IN_SPEED = 6.0 # alpha per second, quick to appear
-const STAMINA_BAR_FADE_OUT_SPEED = 1.5 # alpha per second, lingers a bit then fades
-
 # Enemy proximity audio + vignette
 const ENEMY_TIER_FAR = 50.0
 const ENEMY_TIER_MID = 15.0
@@ -45,10 +47,9 @@ const VIGNETTE_MAX_INTENSITY = 0.75 # intensity when enemy is at/closer than ENE
 const VIGNETTE_FADE_SPEED = 1.5 # intensity units per second
 
 @onready var camera = $Camera3D
+@onready var interaction_ray: RayCast3D = $Camera3D/Interaction_Raytracing
 @onready var flashlight_1: SpotLight3D = $Camera3D/flashlight_1
 @onready var footstep_audio: AudioStreamPlayer3D = $FootstepAudio
-@onready var stamina_bar: ProgressBar = $HUD/StaminaBar
-@onready var vignette: ColorRect = $HUD/Vignette
 @onready var audio_tiers: Array[AudioStreamPlayer] = [
 	$EnemyProximityAudio/AudioFar,
 	$EnemyProximityAudio/AudioTier50,
@@ -58,21 +59,30 @@ const VIGNETTE_FADE_SPEED = 1.5 # intensity units per second
 
 @onready var chase_audio: AudioStreamPlayer = $EnemyProximityAudio/ChaseAudio
 
-var vignette_material: ShaderMaterial
 var current_vignette_intensity = VIGNETTE_BASE_INTENSITY
+var current_look_target_name = ""
+var completed_countable_interactable_ids: Dictionary = {}
+var completed_countable_interactable_count = 0
 var last_logged_tier = -1 # used to only print when the enemy proximity tier changes
 const TIER_NAMES = ["FAR (>50m)", "TIER 50m", "TIER 15m", "TIER 5m"]
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	# camera_base_y = camera.position.y
-	stamina_bar.max_value = MAX_STAMINA
-	stamina_bar.value = stamina
-	stamina_bar.modulate.a = 0.0 # hidden until the player actually sprints
-	vignette_material = vignette.material as ShaderMaterial
-	vignette_material.set_shader_parameter("intensity", VIGNETTE_BASE_INTENSITY)
 	for player in audio_tiers:
 		player.volume_db = AUDIO_SILENT_DB
+
+func get_hud_state() -> Dictionary:
+	return {
+		"stamina": stamina,
+		"max_stamina": MAX_STAMINA,
+		"is_sprinting": is_sprinting,
+		"vignette_intensity": current_vignette_intensity,
+		"countable_interactable_count": completed_countable_interactable_count,
+	}
+
+func get_look_target_name() -> String:
+	return current_look_target_name
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -99,6 +109,7 @@ func _physics_process(delta): # all movment code inside this
 	# Bug fix: only consider the player "sprinting" (and draining stamina) if
 	# they are actually holding a movement direction, not just holding shift in place.
 	var wants_to_sprint = Input.is_action_pressed("sprint") and not stamina_locked and stamina > 0.0 and direction != Vector3.ZERO
+	is_sprinting = wants_to_sprint
 
 	if wants_to_sprint:
 		SPEED = SPRINT_SPEED
@@ -114,12 +125,7 @@ func _physics_process(delta): # all movment code inside this
 		if stamina_locked and stamina >= MAX_STAMINA:
 			stamina_locked = false
 
-	stamina_bar.value = stamina
-
-	# Stamina bar fades in while actively draining, and fades out while idle/recharging
-	var stamina_bar_target_alpha = 1.0 if wants_to_sprint else 0.0
-	var stamina_bar_fade_speed = STAMINA_BAR_FADE_IN_SPEED if stamina_bar_target_alpha > stamina_bar.modulate.a else STAMINA_BAR_FADE_OUT_SPEED
-	stamina_bar.modulate.a = move_toward(stamina_bar.modulate.a, stamina_bar_target_alpha, stamina_bar_fade_speed * delta)
+	stamina_changed.emit(stamina, MAX_STAMINA, is_sprinting)
 
 	if direction:
 		velocity.x = direction.x * SPEED
@@ -131,16 +137,34 @@ func _physics_process(delta): # all movment code inside this
 	#_update_camera_bob(delta)
 	_update_footsteps(delta)
 	_update_enemy_proximity(delta)
+	_update_look_target()
 
 	# Handles the interaction mechanic
 	if Input.is_action_just_pressed("interact"):
-		if $Camera3D/Interaction_Raytracing.is_colliding():
-			var item = $Camera3D/Interaction_Raytracing.get_collider()
+		if interaction_ray.is_colliding():
+			var item = interaction_ray.get_collider()
 			
 			if item.is_in_group("interactable"):
 				item.interact()
+				if item.is_in_group("countable_interactable"):
+					var item_id = item.get_instance_id()
+					if not completed_countable_interactable_ids.has(item_id):
+						completed_countable_interactable_ids[item_id] = true
+						completed_countable_interactable_count += 1
+						countable_interactable_completed.emit(completed_countable_interactable_count)
 
 	move_and_slide()
+
+func _update_look_target() -> void:
+	var target_name := ""
+	if interaction_ray.is_colliding():
+		var target := interaction_ray.get_collider() as Node
+		if target != null and target.is_in_group("look_indicated") and target.has_method("get_interaction_label"):
+			target_name = str(target.call("get_interaction_label"))
+
+	if target_name != current_look_target_name:
+		current_look_target_name = target_name
+		look_target_changed.emit(current_look_target_name)
 
 #func _update_camera_bob(delta):
 	#var horizontal_speed = Vector2(velocity.x, velocity.z).length()
@@ -218,7 +242,7 @@ func _update_enemy_proximity(delta):
 		proximity_ratio = clamp(1.0 - (nearest_distance / ENEMY_TIER_FAR), 0.0, 1.0)
 	var target_intensity = lerp(VIGNETTE_BASE_INTENSITY, VIGNETTE_MAX_INTENSITY, proximity_ratio)
 	current_vignette_intensity = move_toward(current_vignette_intensity, target_intensity, VIGNETTE_FADE_SPEED * delta)
-	vignette_material.set_shader_parameter("intensity", current_vignette_intensity)
+	vignette_intensity_changed.emit(current_vignette_intensity)
 
 func _on_trigger_zone_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
@@ -231,3 +255,7 @@ func monster_seen():
 	var tween = create_tween()
 	tween.tween_property(camera, "fov", 75.0, 0.5)
 	# FOV movement when player saw the monster/enemy
+
+func _input(event): #for menu ui or basically ui
+	if event.is_action_pressed("menu"):
+		get_tree().quit()

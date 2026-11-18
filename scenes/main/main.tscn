@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://cdrn66ncml3xq" path="res://assets/models/feedingstation/feedingstation.glb" id="12_blune"]
 [ext_resource type="PackedScene" uid="uid://bfa3w1fn85yq7" path="res://scenes/environments/fences/fencegate.tscn" id="12_th5th"]
 [ext_resource type="PackedScene" uid="uid://gpaqas6cwe6s" path="res://assets/models/corncrib/corncrib.glb" id="13_7smn1"]
+[ext_resource type="Script" uid="uid://dbqq4deswhu41" path="res://scripts/objects/interactable_item.gd" id="13_raeie"]
 [ext_resource type="PackedScene" uid="uid://tkdfiqrwsc8j" path="res://scenes/environments/fences/fencebarnleft.tscn" id="13_th5th"]
+[ext_resource type="PackedScene" uid="uid://db42yu3urlxyw" path="res://scenes/ui/player_hud.tscn" id="15_player_hud"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iuonh"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -26,10 +28,18 @@ background_mode = 2
 sky = SubResource("Sky_k2fmo")
 fog_enabled = true
 
+[sub_resource type="BoxMesh" id="BoxMesh_n5t4f"]
+size = Vector3(1, 1.5620728, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_apfg6"]
+size = Vector3(0.39953613, 3.2939453, 1.2990723)
+
 [node name="Map" type="Node3D" unique_id=875780235]
 
 [node name="Player" parent="." unique_id=1925318435 instance=ExtResource("2_iuonh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.07765, 3.349811, 1.5464184)
+
+[node name="PlayerHUD" parent="." unique_id=1079740075 instance=ExtResource("15_player_hud")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=981906069]
 environment = SubResource("Environment_l3cfh")
@@ -89,3 +99,101 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.862, 0, 37)
 
 [node name="corncrib" parent="." unique_id=1945595231 instance=ExtResource("13_7smn1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.426, 0, -32.866)
+
+[node name="interactables" type="Node" parent="." unique_id=1013722879]
+
+[node name="InteractableItem" type="StaticBody3D" parent="interactables" unique_id=1053785895 groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.703021, 1.404769, 5.4269886)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem" unique_id=888241763]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem" unique_id=1124883083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note" type="StaticBody3D" parent="interactables" unique_id=1895413685 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, 53.808456, 1.404769, 31.359793)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note" unique_id=90282415]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note" unique_id=1766711211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note2" type="StaticBody3D" parent="interactables" unique_id=766783806 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, -18, 1.404769, -8)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note2" unique_id=4155565]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note2" unique_id=1347103715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note3" type="StaticBody3D" parent="interactables" unique_id=886650047 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, -18, 1.404769, 0)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note3" unique_id=1426401327]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note3" unique_id=2107280740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note4" type="StaticBody3D" parent="interactables" unique_id=58746432 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, -18, 1.404769, 8)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note4" unique_id=309263564]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note4" unique_id=1397138329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note5" type="StaticBody3D" parent="interactables" unique_id=1286091878 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, 18, 1.404769, -8)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note5" unique_id=2141257654]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note5" unique_id=1838818018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note6" type="StaticBody3D" parent="interactables" unique_id=1056907665 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, 18, 1.404769, 0)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note6" unique_id=1593552004]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note6" unique_id=549512573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")
+
+[node name="InteractableItem_note7" type="StaticBody3D" parent="interactables" unique_id=2143448535 groups=["countable_interactable", "interactable", "look_indicated"]]
+transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, 18, 1.404769, 8)
+script = ExtResource("13_raeie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem_note7" unique_id=689290190]
+transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
+mesh = SubResource("BoxMesh_n5t4f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note7" unique_id=1512579538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
+shape = SubResource("BoxShape3D_apfg6")

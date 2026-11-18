@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3dto5xeo2iuq"]
 
 [ext_resource type="PackedScene" uid="uid://dhsqbx1ss7252" path="res://assets/models/barnv1.glb" id="1_cl2t5"]
+[ext_resource type="Script" path="res://scripts/objects/ladder_interactable.gd" id="2_ladder"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7khw3"]
 data = PackedVector3Array(-1, -4.8851, 1, -1, -1.8352, -1, -1, -1.8352, 1, -1, -4.8851, 1, -1, -4.8851, -1, -1, -1.8352, -1, -1, -4.8851, -1, 1, -1.8352, -1, -1, -1.8352, -1, -1, -4.8851, -1, 1, -4.8851, -1, 1, -1.8352, -1, 1, -4.8851, -1, 1, -1.8352, 1, 1, -1.8352, -1, 1, -4.8851, -1, 1, -4.8851, 1, 1, -1.8352, 1, 1, -4.8851, 1, -1, -1.8352, 1, 1, -1.8352, 1, 1, -4.8851, 1, -1, -4.8851, 1, -1, -1.8352, 1, -1, -4.8851, -1, 1, -4.8851, 1, 1, -4.8851, -1, -1, -4.8851, -1, -1, -4.8851, 1, 1, -4.8851, 1, 1, -1.8352, -1, -1, -1.8352, 1, -1, -1.8352, -1, 1, -1.8352, -1, 1, -1.8352, 1, -1, -1.8352, 1)
@@ -196,7 +197,8 @@ shape = SubResource("ConcavePolygonShape3D_h2tc6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="frontdoor_005/StaticBody3D" index="0" unique_id=1260547897]
 shape = SubResource("ConcavePolygonShape3D_fermt")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="ladder" parent_id_path=PackedInt32Array(1479288357) index="0" unique_id=1156405817]
+[node name="StaticBody3D" type="StaticBody3D" parent="ladder" parent_id_path=PackedInt32Array(1479288357) index="0" unique_id=1156405817 groups=["interactable", "look_indicated"]]
+script = ExtResource("2_ladder")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ladder/StaticBody3D" index="0" unique_id=1211232093]
 shape = SubResource("ConcavePolygonShape3D_sokem")

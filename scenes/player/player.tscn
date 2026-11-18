@@ -4,16 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://ddqe2m7ybgy3e" path="res://assets/audio/flashlight_on_sound_1.mp3" id="2_lvxji"]
 [ext_resource type="AudioStream" uid="uid://dvmg6dukfo62b" path="res://assets/audio/footsteps_concrete_1.wav" id="3_gmlin"]
 [ext_resource type="PackedScene" uid="uid://vva8r34hd3yy" path="res://scenes/objects/flashlight_1.tscn" id="3_lvxji"]
-[ext_resource type="Shader" uid="uid://cu7cq5jwpv5sq" path="res://assets/shaders/vignette.gdshader" id="4_vignette"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27gba"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
-shader = ExtResource("4_vignette")
-shader_parameter/intensity = 0.25
-shader_parameter/radius = 0.75
-shader_parameter/softness = 0.55
-shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody3D" unique_id=1925318435 groups=["player"]]
 script = ExtResource("1_p47bc")
@@ -59,27 +50,6 @@ volume_db = -80.0
 volume_db = -80.0
 
 [node name="ChaseAudio" type="AudioStreamPlayer" parent="EnemyProximityAudio" unique_id=618585503]
-
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1712935308]
-
-[node name="Vignette" type="ColorRect" parent="HUD" unique_id=988414713]
-material = SubResource("ShaderMaterial_vignette")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[node name="StaminaBar" type="ProgressBar" parent="HUD" unique_id=1182729120]
-offset_left = 483.0
-offset_top = 554.0
-offset_right = 683.0
-offset_bottom = 578.0
-max_value = 3.0
-value = 3.0
-show_percentage = false
 
 [node name="FootstepAudio" type="AudioStreamPlayer3D" parent="." unique_id=1416747824]
 stream = ExtResource("3_gmlin")
