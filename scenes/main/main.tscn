@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bju114d6tamr2"]
 
 [ext_resource type="PackedScene" uid="uid://dky2rjs4ef1ri" path="res://scenes/player/player.tscn" id="2_iuonh"]
-[ext_resource type="PackedScene" uid="uid://b3dto5xeo2iuq" path="res://scenes/environments/barnv1.tscn" id="2_k2fmo"]
 [ext_resource type="PackedScene" uid="uid://bq3rua74hrhx" path="res://scenes/environments/fences/fenceleft1.tscn" id="5_6q06x"]
 [ext_resource type="PackedScene" uid="uid://be3767anxejc3" path="res://scenes/environments/fences/fenceright.tscn" id="6_ow5a4"]
 [ext_resource type="PackedScene" uid="uid://cmpm7cnij58w" path="res://assets/models/fences/fencebroken.glb" id="7_hujxm"]
@@ -15,6 +14,9 @@
 [ext_resource type="Script" uid="uid://dbqq4deswhu41" path="res://scripts/objects/interactable_item.gd" id="13_raeie"]
 [ext_resource type="PackedScene" uid="uid://tkdfiqrwsc8j" path="res://scenes/environments/fences/fencebarnleft.tscn" id="13_th5th"]
 [ext_resource type="PackedScene" uid="uid://db42yu3urlxyw" path="res://scenes/ui/player_hud.tscn" id="15_player_hud"]
+[ext_resource type="PackedScene" uid="uid://dhsqbx1ss7252" path="res://assets/models/barnv1.glb" id="15_raeie"]
+[ext_resource type="PackedScene" uid="uid://b2k37s6xs6ly5" path="res://assets/models/interactables/ladder.glb" id="16_hxu8e"]
+[ext_resource type="PackedScene" uid="uid://c0y846bqydme4" path="res://assets/models/interactables/door.glb" id="17_nvumn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iuonh"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -48,71 +50,60 @@ environment = SubResource("Environment_l3cfh")
 use_collision = true
 size = Vector3(400, 0, 400)
 
-[node name="Models" type="Node" parent="." unique_id=162583533]
+[node name="environment" type="Node" parent="." unique_id=162583533]
 
-[node name="fences" type="Node" parent="Models" unique_id=395754623]
+[node name="fences" type="Node" parent="environment" unique_id=395754623]
 
-[node name="Fencebarnleft" parent="Models/fences" unique_id=219773673 instance=ExtResource("13_th5th")]
+[node name="Fencebarnleft" parent="environment/fences" unique_id=219773673 instance=ExtResource("13_th5th")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 59.95, 0, 39.3)
 
-[node name="Fencebarnright" parent="Models/fences" unique_id=5339318 instance=ExtResource("13_th5th")]
+[node name="Fencebarnright" parent="environment/fences" unique_id=5339318 instance=ExtResource("13_th5th")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -47.849003, 9.536743e-07, -44.103996)
 
-[node name="Fencegate" parent="Models/fences" unique_id=1077148273 instance=ExtResource("12_th5th")]
+[node name="Fencegate" parent="environment/fences" unique_id=1077148273 instance=ExtResource("12_th5th")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 0)
 
-[node name="Fencebarnback" parent="Models/fences" unique_id=19164326 instance=ExtResource("12_7smn1")]
+[node name="Fencebarnback" parent="environment/fences" unique_id=19164326 instance=ExtResource("12_7smn1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.004143, 0, -0.21158731)
 
-[node name="Fenceright" parent="Models/fences" unique_id=1976065798 instance=ExtResource("6_ow5a4")]
+[node name="Fenceright" parent="environment/fences" unique_id=1976065798 instance=ExtResource("6_ow5a4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, -201.9)
 
-[node name="fencebroken" parent="Models/fences" unique_id=750567679 instance=ExtResource("7_hujxm")]
+[node name="fencebroken" parent="environment/fences" unique_id=750567679 instance=ExtResource("7_hujxm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0.032, 63.85)
 
-[node name="Fenceleft1" parent="Models/fences" unique_id=1439617901 instance=ExtResource("5_6q06x")]
+[node name="Fenceleft1" parent="environment/fences" unique_id=1439617901 instance=ExtResource("5_6q06x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 201.05)
 
-[node name="Fenceleft2" parent="Models/fences" unique_id=1491275178 instance=ExtResource("8_yyfjg")]
+[node name="Fenceleft2" parent="environment/fences" unique_id=1491275178 instance=ExtResource("8_yyfjg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 58.95)
 
-[node name="fencenopost" parent="Models/fences" unique_id=1980884839 instance=ExtResource("8_a8run")]
+[node name="fencenopost" parent="environment/fences" unique_id=1980884839 instance=ExtResource("8_a8run")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -5.0479436)
 
-[node name="Fenceleft3" parent="Models/fences" unique_id=1114943932 instance=ExtResource("5_6q06x")]
+[node name="Fenceleft3" parent="environment/fences" unique_id=1114943932 instance=ExtResource("5_6q06x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -9.89)
 
-[node name="shed" type="Node" parent="Models" unique_id=1935201612]
+[node name="shed" type="Node" parent="environment" unique_id=1935201612]
 
-[node name="shed" parent="Models/shed" unique_id=485510556 instance=ExtResource("11_ouso4")]
+[node name="shed" parent="environment/shed" unique_id=485510556 instance=ExtResource("11_ouso4")]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 43.87748, 0, -34.879494)
 
-[node name="barn" type="Node" parent="Models" unique_id=415503986]
+[node name="barn" type="Node" parent="environment" unique_id=415503986]
 
-[node name="barnv1" parent="Models/barn" unique_id=1282332526 instance=ExtResource("2_k2fmo")]
-transform = Transform3D(0.99982274, 0, -0.018826772, 0, 1, 0, 0.018826772, 0, 0.99982274, 0, 0, 0)
+[node name="barnv1" parent="environment/barn" unique_id=703809856 instance=ExtResource("15_raeie")]
 
-[node name="feedingstation" type="Node" parent="Models" unique_id=158121929]
+[node name="feedingstation" type="Node" parent="environment" unique_id=158121929]
 
-[node name="feedingstation" parent="Models/feedingstation" unique_id=171807709 instance=ExtResource("12_blune")]
+[node name="feedingstation" parent="environment/feedingstation" unique_id=171807709 instance=ExtResource("12_blune")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.862, 0, 37)
 
-[node name="corncrib" parent="." unique_id=1945595231 instance=ExtResource("13_7smn1")]
+[node name="corncrib" type="Node" parent="environment" unique_id=166139977]
+
+[node name="corncrib" parent="environment/corncrib" unique_id=1945595231 instance=ExtResource("13_7smn1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.426, 0, -32.866)
 
 [node name="interactables" type="Node" parent="." unique_id=1013722879]
-
-[node name="InteractableItem" type="StaticBody3D" parent="interactables" unique_id=1053785895 groups=["interactable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.703021, 1.404769, 5.4269886)
-script = ExtResource("13_raeie")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="interactables/InteractableItem" unique_id=888241763]
-transform = Transform3D(0.13869742, 0.18282379, -0.002069362, -0.010684093, 2.3734093, -0.0016098393, 0.00018685874, 0.002908077, 1.443955, 0.09650993, 0.5555959, 0.0007491112)
-mesh = SubResource("BoxMesh_n5t4f")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem" unique_id=1124883083]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
-shape = SubResource("BoxShape3D_apfg6")
 
 [node name="InteractableItem_note" type="StaticBody3D" parent="interactables" unique_id=1895413685 groups=["countable_interactable", "interactable", "look_indicated"]]
 transform = Transform3D(0.17094845, 0, 0, 0, 0.05534102, 0, 0, 0, 0.1555873, 53.808456, 1.404769, 31.359793)
@@ -197,3 +188,9 @@ mesh = SubResource("BoxMesh_n5t4f")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="interactables/InteractableItem_note7" unique_id=1512579538]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08062744, 0.49853516, -0.059936523)
 shape = SubResource("BoxShape3D_apfg6")
+
+[node name="ladder" parent="." unique_id=1184085375 instance=ExtResource("16_hxu8e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.583968, 0, 5.5)
+
+[node name="door" parent="." unique_id=1536123444 instance=ExtResource("17_nvumn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.920611, 0, 6.124577)
