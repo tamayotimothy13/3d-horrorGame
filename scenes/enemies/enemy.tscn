@@ -4,19 +4,23 @@
 [ext_resource type="PackedScene" uid="uid://rwongc7enlc4" path="res://scenes/objects/light.tscn" id="2_8e3ao"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27gba"]
+height = 2.0039063
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h4pri"]
 albedo_color = Color(0.76674443, 0.0021251892, 2.8878452e-07, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27gba"]
+radius = 0.3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_27gba"]
-size = Vector3(18.502731, 6.117831, 9.984125)
+size = Vector3(47.301586, 6.117831, 55.75067)
 
 [node name="Enemy" type="CharacterBody3D" unique_id=819045432 groups=["enemy"]]
+safe_margin = 0.05
 script = ExtResource("1_6xk8f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1641406179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001953125, 0)
 mesh = SubResource("CapsuleMesh_27gba")
 surface_material_override/0 = SubResource("StandardMaterial3D_h4pri")
 
@@ -33,7 +37,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VisionCone" unique_id=932212079]
-transform = Transform3D(0.9998797, 0.0155086145, 0, -0.0155086145, 0.9998797, 0, 0, 0, 1, 1.310453, 1.8433781, 0.86742496)
+transform = Transform3D(0.9998797, 0.0155086145, 0, -0.0155086145, 0.9998797, 0, 0, 0, 1, 2.4157028, 1.826235, -0.10538483)
 shape = SubResource("BoxShape3D_27gba")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1889542544]
