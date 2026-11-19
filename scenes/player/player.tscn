@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://ddqe2m7ybgy3e" path="res://assets/audio/flashlight_on_sound_1.mp3" id="2_lvxji"]
 [ext_resource type="AudioStream" uid="uid://dvmg6dukfo62b" path="res://assets/audio/footsteps_concrete_1.wav" id="3_gmlin"]
 [ext_resource type="PackedScene" uid="uid://vva8r34hd3yy" path="res://scenes/objects/flashlight_1.tscn" id="3_lvxji"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27gba"]
 
 [node name="Player" type="CharacterBody3D" unique_id=1925318435 groups=["player"]]

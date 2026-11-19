@@ -53,7 +53,6 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_crosshair_dot")
 
 [node name="LookTargetLabel" type="Label" parent="." unique_id=396905850]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -70,7 +69,6 @@ theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
 
 [node name="NoteCounterLabel" type="Label" parent="." unique_id=136527847]
-visible = false
 offset_left = 24.0
 offset_top = 24.0
 offset_right = 220.0
