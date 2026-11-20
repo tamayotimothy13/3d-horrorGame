@@ -7,10 +7,10 @@
 [node name="Fencegate" type="Node3D" unique_id=1077148273]
 
 [node name="fencegatel" parent="." unique_id=605641426 instance=ExtResource("1_3mu6m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 4.925)
+transform = Transform3D(0.91739523, 0, -0.3979777, 0, 1, 0, 0.3979777, 0, 0.91739523, -0.05, 0, 4.925)
 
 [node name="fencegater" parent="." unique_id=631348765 instance=ExtResource("2_d7mav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, -0.025)
+transform = Transform3D(0.999989, -7.106515e-05, 0.0046864445, 5.703757e-05, 0.9999956, 0.002993291, -0.0046866364, -0.0029929911, 0.9999845, -0.07491462, 0, -0.025)
 
 [node name="fencepost" parent="." unique_id=375628347 instance=ExtResource("3_33jk3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.005826056, 5.040343)

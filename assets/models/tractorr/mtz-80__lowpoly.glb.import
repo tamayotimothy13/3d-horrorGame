@@ -1,0 +1,126 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://kmihou4vkqkj"
+path="res://.godot/imported/mtz-80__lowpoly.glb-c2c5782002c2ed2579ebe8370d795b59.scn"
+
+[deps]
+
+source_file="res://assets/models/tractorr/mtz-80__lowpoly.glb"
+dest_files=["res://.godot/imported/mtz-80__lowpoly.glb-c2c5782002c2ed2579ebe8370d795b59.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"nodes": {
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Back_Control/Back_Control_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Brush/Brush_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Door_L/Door_L_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Door_R/Door_R_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/F/F_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Front_Wheel_L/Front_Wheel_L_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Front_Wheel_R/Front_Wheel_R_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Fuel_tank/Fuel_tank_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/GASGASGAS/GASGASGAS_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Gas_pipe/Gas_pipe_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/KPP/KPP_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Light/Light_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Light_001/Light_001_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Machine/Machine_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Stop/Stop_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Tracktor_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/TrapDoor/TrapDoor_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Val/Val_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Wheel_Back_L/Wheel_Back_L_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/Wheel_Back_R/Wheel_Back_R_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/clutch/clutch_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/drive_back/drive_back_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/hook/hook_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/pipe/pipe_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/rail/rail_MTZ-80_0": {
+"generate/physics": true
+},
+"PATH:Sketchfab_model/MTZ-80_fbx/RootNode/Tracktor/steering wheel/steering wheel_MTZ-80_0": {
+"generate/physics": true
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

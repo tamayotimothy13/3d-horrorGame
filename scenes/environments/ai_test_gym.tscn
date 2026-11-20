@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dn5f43j6cp8p5" path="res://scenes/enemies/enemy.tscn" id="1_i83kb"]
 [ext_resource type="PackedScene" uid="uid://dky2rjs4ef1ri" path="res://scenes/player/player.tscn" id="2_yr7qy"]
-[ext_resource type="PackedScene" path="res://scenes/ui/player_hud.tscn" id="3_player_hud"]
+[ext_resource type="PackedScene" uid="uid://db42yu3urlxyw" path="res://scenes/ui/player_hud.tscn" id="3_player_hud"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_27gba"]
 vertices = PackedVector3Array(-8.027466, 0.4998088, -1.5, -8.027466, 0.4998088, -49, -49.027466, 0.4998088, -49, -49.027466, 0.4998088, -1.5, -6.027466, 0.4998088, 1.75, -8.027466, 0.4998088, 1.75, -8.027466, 0.4998088, 10.25, -5.277466, 0.4998088, 1, 14.722534, 0.4998088, 10.25, -6.027466, 0.4998088, -1.5, -5.277466, 0.4998088, -0.75, 48.972534, 0.4998088, 11.75, 48.972534, 0.4998088, -49, 15.472534, 0.4998088, 11, 15.472534, 0.4998088, 11.75, -12.777466, 0.4998088, 10.25, -13.527466, 0.4998088, 11, -49.027466, 0.4998088, 1.75, -10.777466, 0.4998088, 49, -10.777466, 0.4998088, 13.5, -12.777466, 0.4998088, 13.5, -13.527466, 0.4998088, 12.75, -49.027466, 0.4998088, 49, 15.472534, 0.4998088, 12.75, 14.722534, 0.4998088, 13.5, 12.722534, 0.4998088, 49, 48.972534, 0.4998088, 49, 12.722534, 0.4998088, 13.5)
@@ -34,7 +34,7 @@ size = Vector3(26.83429, 16.02832, 1)
 [node name="Player" parent="NavigationRegion3D" unique_id=1925318435 instance=ExtResource("2_yr7qy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5891418, -19.135368)
 
-[node name="PlayerHUD" parent="." instance=ExtResource("3_player_hud")]
-
 [node name="Enemy" parent="NavigationRegion3D" unique_id=819045432 instance=ExtResource("1_i83kb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.804134, 0)
+
+[node name="PlayerHUD" parent="." unique_id=1684076817 instance=ExtResource("3_player_hud")]
