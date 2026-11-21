@@ -13,6 +13,7 @@ var target: Node3D
 
 var player_in_vision_area: bool = false
 var has_line_of_sight: bool = false
+var last_seen_position: Vector3
 
 # Timer para sa 3 seconds chase grace period
 var lose_sight_timer: float = 0.0
@@ -49,16 +50,16 @@ func _physics_process(delta: float) -> void:
 
 	# 1. RayCast Check kung may harang na pader patungo sa player
 	if target and ray_cast:
-		ray_cast.target_position = ray_cast.to_local(target.global_position + Vector3(0, 1, 0))
+		var eye_position: Vector3 = target.get_node("Camera3D").global_position
+		ray_cast.target_position = ray_cast.to_local(eye_position)
 		ray_cast.force_raycast_update()
-		
-		if ray_cast.is_colliding() and ray_cast.get_collider() == target:
-			has_line_of_sight = true
-		else:
+		has_line_of_sight = not ray_cast.is_colliding() or ray_cast.get_collider() == target
+		if target.is_hidden_from_enemies():
 			has_line_of_sight = false
 
 	# 2. CHASE MEMORY AT SPEED LOGIC
 	if player_in_vision_area and has_line_of_sight:
+		last_seen_position = target.global_position
 		lose_sight_timer = CHASE_DELAY 
 		current_speed = CHASE_SPEED
 		is_investigating = false # Nakita ka na ulit, kaya itigil muna ang note investigation
@@ -77,7 +78,7 @@ func _physics_process(delta: float) -> void:
 		nav_agent.target_position = target.global_position
 	elif lose_sight_timer > 0 and not is_investigating:
 		# Grace period habang hinahabol ang huling posisyon mo
-		nav_agent.target_position = target.global_position
+		nav_agent.target_position = last_seen_position
 	elif is_investigating:
 		# Papunta siya sa note. Kapag malapit na siya sa note, ibalik sa normal/patrol
 		if nav_agent.is_navigation_finished() or global_position.distance_to(nav_agent.target_position) < 1.5:

@@ -23,12 +23,14 @@ func _ready() -> void:
 	player.connect("vignette_intensity_changed", _on_vignette_intensity_changed)
 	player.connect("look_target_changed", _on_look_target_changed)
 	player.connect("countable_interactable_completed", _on_countable_interactable_completed)
+	player.connect("hiding_changed", _on_hiding_changed)
 
 	var state: Dictionary = player.call("get_hud_state")
 	_on_stamina_changed(state["stamina"], state["max_stamina"], state["is_sprinting"])
 	_on_vignette_intensity_changed(state["vignette_intensity"])
 	_on_look_target_changed(player.call("get_look_target_name"))
 	_on_countable_interactable_completed(state["countable_interactable_count"])
+	_on_hiding_changed(state["hiding"], state["peeking"])
 	call_deferred("_refresh_note_total")
 
 func _process(delta: float) -> void:
@@ -46,6 +48,10 @@ func _on_vignette_intensity_changed(intensity: float) -> void:
 func _on_look_target_changed(target_name: String) -> void:
 	look_target_label.text = target_name
 	look_target_label.visible = not target_name.is_empty()
+
+func _on_hiding_changed(hiding: bool, peeking: bool) -> void:
+	$BarrelDarkness.visible = hiding and not peeking
+	$CrosshairDot.visible = not hiding
 
 func _on_countable_interactable_completed(count: int) -> void:
 	completed_notes = count

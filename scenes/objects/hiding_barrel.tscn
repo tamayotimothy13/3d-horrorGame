@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/objects/hiding_barrel.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/drum/low_poly_oil_drum.glb" id="2_model"]
+
+[sub_resource type="CylinderShape3D" id="Cylinder_barrel"]
+height = 2.01
+radius = 0.66
+
+[node name="HidingBarrel" type="StaticBody3D" groups=["interactable", "look_indicated", "hiding_barrel"]]
+script = ExtResource("1_script")
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, -0.005, 0)
+shape = SubResource("Cylinder_barrel")

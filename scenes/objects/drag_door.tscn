@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/objects/drag_door.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/interactables/door.glb" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="Panel_shape"]
+size = Vector3(0.06, 2.46, 1.46)
+
+[sub_resource type="BoxShape3D" id="Handle_shape"]
+size = Vector3(0.32, 0.16, 0.16)
+
+[node name="DragDoor" type="Node3D"]
+
+[node name="Hinge" type="AnimatableBody3D" parent="." groups=["look_indicated", "drag_door"]]
+position = Vector3(-0.055, 0, 0.75)
+sync_to_physics = false
+script = ExtResource("1_script")
+
+[node name="Model" parent="Hinge" instance=ExtResource("2_model")]
+position = Vector3(0.055, 0, -0.7566)
+scale = Vector3(1, 1, 0.98)
+
+[node name="PanelCollision" type="CollisionShape3D" parent="Hinge"]
+position = Vector3(0.03, 1.25, -0.75)
+shape = SubResource("Panel_shape")
+
+[node name="HandleCollision" type="CollisionShape3D" parent="Hinge"]
+position = Vector3(0.055, 1.25, -1.3691)
+shape = SubResource("Handle_shape")
+
+[node name="Handle" type="Marker3D" parent="Hinge"]
+position = Vector3(0.055, 1.25, -1.3691)
